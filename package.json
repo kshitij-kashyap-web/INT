@@ -17,7 +17,12 @@
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
     "express": "^5.2.1",
+<<<<<<< HEAD
     "firebase-admin": "^13.8.0",
     "mongoose": "^9.4.1"
+=======
+    "mongoose": "^9.4.1",
+    "moongoose": "^0.0.5"
+>>>>>>> 119ae5484c8b70a9c7ebecc177e88ff566428ee7
   }
 }

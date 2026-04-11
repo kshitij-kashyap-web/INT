@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { Search, Bell, RefreshCw, Sun, Moon } from 'lucide-react';
+import useRealTimeData from '../hooks/useRealTimeData'; // 🔥 ADD THIS
 
 export default function Topbar({ title, subtitle, dark, setDark }) {
+
+  // 🔥 real data
+  const realData = useRealTimeData();
+  const criticalCount = realData.filter(d => d.status === "ATTACK").length;
 
   // 🔥 refresh loading state
   const [loading, setLoading] = useState(false);
@@ -21,7 +26,7 @@ export default function Topbar({ title, subtitle, dark, setDark }) {
   return (
     <div style={{
       height: 'var(--topbar-h)',
-      padding: '0 20px',
+      padding: '12px 20px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -91,9 +96,9 @@ export default function Topbar({ title, subtitle, dark, setDark }) {
           {new Date().toLocaleTimeString()}
         </div>
 
-        {/* ALERT */}
+        {/* 🔥 LIVE ALERT COUNT */}
         <div style={{
-          background: 'var(--danger-light)',
+          background: 'rgba(231,111,81,0.1)',
           color: 'var(--danger)',
           padding: '6px 10px',
           borderRadius: 8,
@@ -101,15 +106,15 @@ export default function Topbar({ title, subtitle, dark, setDark }) {
           fontWeight: 600,
           border: '1px solid var(--danger)'
         }}>
-          ⚠ 2 Critical
+          ⚠ {criticalCount} Critical
         </div>
 
-        {/* 🔄 REFRESH (FIXED) */}
+        {/* 🔄 REFRESH (REAL) */}
         <div
           style={iconBtn}
           onClick={() => {
             setLoading(true);
-            setTimeout(() => setLoading(false), 1000);
+            window.location.reload(); // 🔥 REAL REFRESH
           }}
           onMouseEnter={e => e.currentTarget.style.background = 'var(--accent-light)'}
           onMouseLeave={e => e.currentTarget.style.background = 'var(--bg-card)'}

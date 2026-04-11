@@ -6,7 +6,6 @@ const navItems = [
   { id: 'devices', label: 'Devices', icon: Cpu },
   { id: 'threats', label: 'Threat Log', icon: Shield },
   { id: 'traffic', label: 'Network Traffic', icon: Activity },
-  { id: 'aianalysis', label: 'AI Analysis', icon: Brain },
   { id: 'alerts', label: 'Alerts', icon: Bell, badge: 3 },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
@@ -27,7 +26,7 @@ export default function Sidebar({ activePage, setActivePage }) {
     }}>
       {/* Logo */}
       <div style={{
-        padding: '0 20px',
+        padding: '12px 20px',
         height: 'var(--topbar-h)',
         display: 'flex',
         alignItems: 'center',

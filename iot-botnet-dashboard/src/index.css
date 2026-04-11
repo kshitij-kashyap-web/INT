@@ -45,12 +45,12 @@ body.dark {
   --text-secondary: #cfcfcf;
   --text-muted: #aaaaaa;
 
-  --accent: #d4a373;
+  --accent: #73d480;
   --accent-light: #3a2f26;
   --accent-hover: #b07d4f;
 
   --success: #7fb069;
-  --danger: #e76f51;
+  --danger: #ad1e1e;
   --warning: #e9c46a;
 
   --shadow: 0 8px 20px rgba(0,0,0,0.4);

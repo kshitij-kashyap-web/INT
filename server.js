@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const player = require("play-sound")();
-
+latestData = [];
 const app = express();
 
 app.use(cors());
@@ -15,7 +15,7 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://iot-botnet-764ca-default-rtdb.firebaseio.com/"
 });
-latestData = [];
+
 
 const db = admin.database();
 

@@ -6,8 +6,7 @@ const navItems = [
   { id: 'devices', label: 'Devices', icon: Cpu },
   { id: 'threats', label: 'Threat Log', icon: Shield },
   { id: 'traffic', label: 'Network Traffic', icon: Activity },
-  { id: 'alerts', label: 'Alerts', icon: Bell, badge: 3 },
-  { id: 'settings', label: 'Settings', icon: Settings },
+  { id: 'alerts', label: 'Alerts', icon: Bell, badge: 3 },  
 ];
 
 export default function Sidebar({ activePage, setActivePage }) {
@@ -36,7 +35,7 @@ export default function Sidebar({ activePage, setActivePage }) {
         <div style={{
           width: 32,
           height: 32,
-          background: 'var(--accent)',
+          background: 'var(--bd)',
           borderRadius: 8,
           display: 'flex',
           alignItems: 'center',
@@ -45,7 +44,7 @@ export default function Sidebar({ activePage, setActivePage }) {
           <Wifi size={16} color="white" strokeWidth={2.5} />
         </div>
         <div>
-          <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--text-primary)', lineHeight: 1.2 }}>SentinelIoT</div>
+          <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--text-primary)', lineHeight: 1.2 }}>NetRAksh</div>
           <div style={{ fontSize: 11, color: 'var(--text-muted)', letterSpacing: '0.02em' }}>Detection System</div>
         </div>
       </div>

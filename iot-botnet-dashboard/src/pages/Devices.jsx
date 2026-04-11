@@ -25,11 +25,12 @@ function DeviceModal({ device, onClose }) {
     }} onClick={onClose}>
       <div
         style={{
-          background: 'white',
+          background: 'var(--bg-card)', // 🔥 FIX
           borderRadius: 16,
           padding: '24px',
           width: 480,
-          boxShadow: '0 20px 60px rgba(0,0,0,0.12)',
+          border: '1px solid var(--border)',
+          boxShadow: 'var(--shadow)',
           animation: 'fadeIn 0.2s ease',
         }}
         onClick={e => e.stopPropagation()}
@@ -39,7 +40,14 @@ function DeviceModal({ device, onClose }) {
             <div style={{ fontSize: 17, fontWeight: 700 }}>{device.name}</div>
             <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{device.type}</div>
           </div>
-          <button onClick={onClose}><X size={16} /></button>
+          <button onClick={onClose} style={{
+            background: 'var(--bg)',
+            border: '1px solid var(--border)',
+            borderRadius: 6,
+            padding: 4
+          }}>
+            <X size={16} />
+          </button>
         </div>
 
         <button onClick={onClose}>Close</button>
@@ -52,11 +60,10 @@ export default function Devices() {
 
   const realData = useRealTimeData();
 
-  // 🔥 UI SAME + DATA LIVE
   const devices = realData.length === 0
     ? mockDevices
     : realData.map((d, i) => ({
-        ...mockDevices[i % mockDevices.length], // 👈 UI preserved
+        ...mockDevices[i % mockDevices.length],
         id: i,
         name: d.device_id || "ESP32",
         status: d.status === "ATTACK" ? "infected" : "safe",
@@ -81,19 +88,29 @@ export default function Devices() {
     <div style={{ padding: '24px', animation: 'fadeIn 0.3s ease' }}>
       <DeviceModal device={selected} onClose={() => setSelected(null)} />
 
-      {/* HEADER SAME */}
+      {/* HEADER */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
         <div style={{
           display: 'flex', alignItems: 'center', gap: 8,
-          background: 'white', border: '1px solid var(--border)',
-          borderRadius: 8, padding: '7px 12px', flex: 1, maxWidth: 320,
+          background: 'var(--bg-card)', // 🔥 FIX
+          border: '1px solid var(--border)',
+          borderRadius: 8,
+          padding: '7px 12px',
+          flex: 1,
+          maxWidth: 320,
         }}>
           <Search size={14} color="var(--text-muted)" />
           <input
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search by name, IP, or type…"
-            style={{ border: 'none', outline: 'none', fontSize: 13 }}
+            style={{
+              border: 'none',
+              outline: 'none',
+              fontSize: 13,
+              background: 'transparent',
+              color: 'var(--text-primary)'
+            }}
           />
         </div>
 
@@ -102,9 +119,9 @@ export default function Devices() {
         </div>
       </div>
 
-      {/* 🔥 SAME TABLE UI */}
+      {/* TABLE */}
       <div style={{
-        background: 'white',
+        background: 'var(--bg-card)', // 🔥 FIX
         border: '1px solid var(--border)',
         borderRadius: '12px',
         overflow: 'hidden',
@@ -114,15 +131,24 @@ export default function Devices() {
             {filtered.map((d, i) => {
               const Icon = typeIcons[d.type] || Cpu;
               return (
-                <tr key={d.id} onClick={() => setSelected(d)}>
+                <tr
+                  key={d.id}
+                  onClick={() => setSelected(d)}
+                  style={{
+                    borderBottom: '1px solid var(--border)',
+                    cursor: 'pointer'
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background = 'var(--accent-light)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                >
                   <td style={{ padding: '12px 14px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <Icon size={16} />
-                      <div>{d.name}</div>
+                      <Icon size={16} color="var(--text-secondary)" />
+                      <div style={{ color: 'var(--text-primary)' }}>{d.name}</div>
                     </div>
                   </td>
                   <td><StatusBadge status={d.status} /></td>
-                  <td>{d.traffic}</td>
+                  <td style={{ color: 'var(--text-secondary)' }}>{d.traffic}</td>
                 </tr>
               );
             })}

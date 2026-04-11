@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Shield, AlertTriangle, Info, CheckCircle, Clock, XCircle } from 'lucide-react';
 import { SeverityBadge } from '../components/Badges.jsx';
 import { threatEvents } from '../data/mockData.js';
-import useRealTimeData from '../hooks/useRealTimeData'; // 🔥 LIVE
+import useRealTimeData from '../hooks/useRealTimeData';
 
 const actionColor = {
   Quarantined: { bg: '#f5f3ff', color: '#6d28d9' },
@@ -14,20 +14,12 @@ const actionColor = {
 
 export default function ThreatLog() {
 
-  const realData = useRealTimeData(); // 🔥 LIVE
+  const realData = useRealTimeData();
 
-  // 🔥 UI SAME + DATA LIVE
   const allThreats = realData.length === 0
-    ? [
-        ...threatEvents,
-        { id: 8, time: '13:12:44', device: 'Front CCTV', ip: '192.168.1.10', type: 'Mirai Botnet', severity: 'critical', action: 'Quarantined', details: 'Telnet bruteforce on port 23 followed by malware download' },
-        { id: 9, time: '12:55:10', device: 'Smart Bulb Hub', ip: '192.168.1.52', type: 'Lateral Movement', severity: 'high', action: 'Blocked', details: 'Internal port sweep detected from compromised device' },
-        { id: 10, time: '12:38:22', device: 'Smart Printer', ip: '192.168.1.35', type: 'Data Exfil Attempt', severity: 'high', action: 'Blocked', details: 'Large payload sent to external IP over HTTP' },
-        { id: 11, time: '11:50:18', device: 'NAS Server', ip: '192.168.1.200', type: 'Weak Credentials', severity: 'medium', action: 'Flagged', details: 'Default credential "admin/admin" used for access' },
-        { id: 12, time: '11:20:05', device: 'Access Control', ip: '192.168.1.77', type: 'Firmware Tamper', severity: 'low', action: 'Logged', details: 'Unexpected firmware update request from unknown source' },
-      ]
+    ? [...threatEvents]
     : realData.map((d, i) => ({
-        ...threatEvents[i % threatEvents.length], // 👈 UI SAME
+        ...threatEvents[i % threatEvents.length],
         id: i,
         time: new Date().toLocaleTimeString(),
         device: d.device_id || "ESP32",
@@ -36,7 +28,7 @@ export default function ThreatLog() {
         severity: d.status === "ATTACK" ? "critical" : "low",
         action: d.status === "ATTACK" ? "Blocked" : "Logged",
         details: d.status === "ATTACK"
-          ? "High packet rate detected on device (possible botnet activity)"
+          ? "High packet rate detected (botnet activity)"
           : "Normal telemetry data flow",
       }));
 
@@ -48,7 +40,7 @@ export default function ThreatLog() {
   return (
     <div style={{ padding: '24px', animation: 'fadeIn 0.3s ease' }}>
 
-      {/* SUMMARY CARDS (UNCHANGED) */}
+      {/* SUMMARY */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 20 }}>
         {[
           { label: 'Critical', count: allThreats.filter(t => t.severity === 'critical').length, color: '#dc2626', bg: '#fef2f2', icon: XCircle },
@@ -64,8 +56,7 @@ export default function ThreatLog() {
             alignItems: 'center',
             gap: 12,
             border: `1px solid ${s.color}22`,
-            cursor: 'pointer',
-          }} onClick={() => setFilter(filter === s.label.toLowerCase() ? 'all' : s.label.toLowerCase())}>
+          }}>
             <s.icon size={20} color={s.color} />
             <div>
               <div style={{ fontSize: 22, fontWeight: 700, color: s.color }}>{s.count}</div>
@@ -75,27 +66,26 @@ export default function ThreatLog() {
         ))}
       </div>
 
-      {/* FILTER (UNCHANGED) */}
+      {/* FILTER */}
       <div style={{ display: 'flex', gap: 6, marginBottom: 16 }}>
         {['all', 'critical', 'high', 'medium', 'low'].map(f => (
           <button key={f} onClick={() => setFilter(f)} style={{
             padding: '5px 14px',
             borderRadius: 7,
             border: `1px solid ${filter === f ? 'var(--accent)' : 'var(--border)'}`,
-            background: filter === f ? 'var(--accent-light)' : 'white',
+            background: filter === f ? 'var(--accent-light)' : 'var(--bg-card)',
             color: filter === f ? 'var(--accent)' : 'var(--text-secondary)',
             fontSize: 12,
-            cursor: 'pointer',
           }}>
             {f}
           </button>
         ))}
       </div>
 
-      {/* EVENTS LIST (UNCHANGED) */}
+      {/* EVENTS */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 14 }}>
         <div style={{
-          background: 'white',
+          background: 'var(--bg-card)', // 🔥 FIX
           border: '1px solid var(--border)',
           borderRadius: '12px',
           overflow: 'hidden',
@@ -140,9 +130,9 @@ export default function ThreatLog() {
           ))}
         </div>
 
-        {/* DETAIL PANEL SAME */}
+        {/* DETAIL */}
         <div style={{
-          background: 'white',
+          background: 'var(--bg-card)', // 🔥 FIX
           border: '1px solid var(--border)',
           borderRadius: '12px'
         }}>

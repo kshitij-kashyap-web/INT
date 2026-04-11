@@ -95,7 +95,7 @@ export default function Sidebar({ activePage, setActivePage }) {
                 borderRadius: 8,
                 border: 'none',
                 background: active ? 'var(--accent-light)' : 'transparent',
-                color: active ? 'var(--accent)' : 'var(--text-secondary)',
+                color: active ? 'var(--bd)' : 'var(--text-secondary)',
                 fontWeight: active ? 500 : 400,
                 fontSize: 13.5,
                 cursor: 'pointer',

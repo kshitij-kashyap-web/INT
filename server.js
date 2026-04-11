@@ -15,7 +15,6 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://iot-botnet-764ca-default-rtdb.firebaseio.com/"
 });
-db.ref("data").remove();
 latestData = [];
 
 const db = admin.database();

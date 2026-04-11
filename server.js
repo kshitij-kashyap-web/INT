@@ -1,8 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const player = require("play-sound")();
-let latestData = [];
-
 
 const app = express();
 
@@ -17,6 +15,8 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://iot-botnet-764ca-default-rtdb.firebaseio.com/"
 });
+db.ref("data").remove();
+latestData = [];
 
 const db = admin.database();
 
@@ -24,7 +24,7 @@ const db = admin.database();
 function detectBotnet(packet_size, request_count, device_id) {
   if (request_count > 15 || packet_size > 700) {
     console.log("🚨 BOTNET DETECTED from:", device_id);
-    player.play("C:\\Windows\\Media\\Alarm01.wav");
+   // player.play("C:\\Windows\\Media\\Alarm01.wav");
   } else {
     console.log("✅ NORMAL traffic from:", device_id);
   }
@@ -69,6 +69,7 @@ app.get("/", (req, res) => {
 app.get("/data", (req, res) => {
   res.json(latestData);
 });
+
 
 // start server
 const PORT = 8000;
